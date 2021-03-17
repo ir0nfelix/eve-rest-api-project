@@ -1,0 +1,29 @@
+version: "3.7"
+
+networks:
+  bistro_ms:
+    driver: bridge
+
+volumes:
+  mongo_datadb:
+  mongo_configdb:
+
+services:
+  mongodb:
+    container_name: mongo
+    image: ${CI_REGISTRY_IMAGE}/mongo:develop
+    networks:
+      - restaurant
+    volumes:
+      - mongo_datadb:/data/db
+      - mongo_configdb:/data/configdb
+    restart: unless-stopped
+
+  trainbistro_microservice:
+    container_name: restaurant_microservice
+    image: ${CI_REGISTRY_IMAGE}:develop
+    depends_on:
+      - mongodb
+    networks:
+      - restaurant
+    restart: unless-stopped
