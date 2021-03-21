@@ -10,7 +10,7 @@ from constants import DATE_HMS_FORMAT
 from infrastructure import get_action_log_data, ClientManager, MongoDBInterface, LogManager
 
 
-def open_conductor_session_actions(items):
+def open_waitress_session_actions(items):
     for item in items:
         item['session_datetime_open'] = datetime.now().strftime(DATE_HMS_FORMAT)
 
@@ -26,7 +26,7 @@ def open_conductor_session_actions(items):
     collection.delete_many({'waitress_status': 'C', 'restaurant_id': {'$ne': restaurant_id}})
 
 
-def change_conductor_session_actions(updates, original):
+def change_waitress_session_actions(updates, original):
     log_client = LogManager(request)
 
     if updates['waitress_status'] in ['P', 'S']:

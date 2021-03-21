@@ -5,8 +5,8 @@ from flask import request, jsonify, current_app
 
 from authentication import route_auth
 from event_hooks import (
-    open_conductor_session_actions,
-    change_conductor_session_actions,
+    open_waitress_session_actions,
+    change_waitress_session_actions,
     new_order_actions,
     close_order_actions,
     orders_dynamic_filter
@@ -45,8 +45,8 @@ def disable_food_by_code(code):
 
 
 # region add API Event Hooks
-application.on_insert_action_log += open_conductor_session_actions
-application.on_update_action_log += change_conductor_session_actions
+application.on_insert_action_log += open_waitress_session_actions
+application.on_update_action_log += change_waitress_session_actions
 
 application.on_insert_orders += new_order_actions
 application.on_update_orders += close_order_actions
