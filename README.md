@@ -1,6 +1,20 @@
 ### About
     Demo project based on Python EVE framework which shows simple and 
     gracefull developing of RESTful application.
+
+### Business Logic
+    The project was developed like microservice in distributed backend 
+    eco-system. That service provides local backend processing for one
+    instance of chain restaurant. Each of restaurant has id humber for 
+    identification in SUPERVISOR_SERVICE root-service.
+    SUPERVISOR_SERVICE API is a root-backend application, which provides
+    food menu updating by GET request and receives POST requests from 
+    local restaurants (current application) to save client logs, order
+    logs and witress logs. SUPERVISOR_SERVICE database is related type,
+    prefer is PostgreSQL. 
+    To simplify example requests to SUPERVISOR_SERVICE are secured by
+    basic authentication, periodic tasks are managed by Huey Consumer.
+
 ### Structure
     By using MongoDB database we need just describe database collection 
     shemas in python file collection_shemas.py
@@ -28,8 +42,8 @@
     ...
     }
 ```
-    Allowed method are declared inside DOMAIN with refereces to 
-    shemas in settins.py
+    Allowed method are declared inside DOMAIN with references to
+    schemas in settings.py
 ```
        DOMAIN = {
         'food_category': {
@@ -63,4 +77,14 @@
     application.on_update_orders += close_order_actions
     
     application.on_pre_GET_orders += orders_dynamic_filter
+```
+
+### Build
+```
+docker-compose build
+```
+
+### Run
+```
+docker-compose up
 ```
